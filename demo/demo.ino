@@ -146,9 +146,9 @@ void NEO_fadeOut(void) {
 
 // Circle all pixels clockwise
 void NEO_cw(void) {
-  uint8_t btemp = NEO_bright[15];
-  uint8_t htemp = NEO_hue[15];
-  for(uint8_t i=15; i; i--) {
+  uint8_t btemp = NEO_bright[NUM_PIXELS-1];
+  uint8_t htemp = NEO_hue[NUM_PIXELS-1];
+  for(uint8_t i=NUM_PIXELS-1; i; i--) {
     NEO_bright[i] = NEO_bright[i-1];
     NEO_hue[i]    = NEO_hue[i-1];
   }
@@ -160,12 +160,12 @@ void NEO_cw(void) {
 void NEO_ccw(void) {
   uint8_t btemp = NEO_bright[0];
   uint8_t htemp = NEO_hue[0];
-  for(uint8_t i=0; i<15; i++) {
+  for(uint8_t i=0; i<NUM_PIXELS; i++) {
     NEO_bright[i] = NEO_bright[i+1];
     NEO_hue[i] = NEO_hue[i+1];
   }
-  NEO_bright[11] = btemp;
-  NEO_hue[11] = htemp;
+  NEO_bright[NUM_PIXELS-1] = btemp;
+  NEO_hue[NUM_PIXELS-1] = htemp;
 }
 
 // ===================================================================================
@@ -260,7 +260,10 @@ int main(void) {
       case 6:   NEO_cw(); NEO_show();
                 break;
 
-      case 7:   hue1 += 3; if(hue1 > 191) hue1 -= 192;
+      case 7:   NEO_ccw(); NEO_show();
+                break;
+
+      case 8:   hue1 += 3; if(hue1 > 191) hue1 -= 192;
                 NEO_fill(hue1); NEO_show();
                 break;
                 
@@ -268,8 +271,8 @@ int main(void) {
     }
 
     if(!(--counter)) {
-      counter = 76;
-      if(++state > 7) state = 0;
+      counter = 176;
+      if(++state > 8) state = 0;
     }
     
     resetWatchdog();
