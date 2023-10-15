@@ -1,0 +1,4 @@
+[submodule "HsvConverter"]
+	path = HsvConverter
+	url = https://github.com/SGauvin/HsvConverter
+	branch = master
